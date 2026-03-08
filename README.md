@@ -126,6 +126,14 @@ RconPassword=your_password
 RconPort=25575
 ```
 
+### 4. 注册说明
+
+系统使用邀请码注册机制，邀请码存储在 `user_database.db` 数据库的 `invite_codes` 表中。
+
+**测试邀请码**：`TY8Y2MWL`
+
+你可以使用此邀请码注册测试账号，或在数据库中添加新的邀请码。
+
 ## 使用说明
 
 ### 连接 RCON

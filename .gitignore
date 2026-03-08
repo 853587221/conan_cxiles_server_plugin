@@ -7,9 +7,9 @@ __pycache__/
 *.egg-info/
 .eggs/
 
-# 数据库
-*.db
-*.sqlite3
+# 数据库（已保留用于开源）
+# *.db
+# *.sqlite3
 
 # 日志
 *.log

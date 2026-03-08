@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_dark"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="@color/white"
+            android:contentDescription="返回" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="⚡ 自动命令"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_add_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="➕ 添加"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/accent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext"
+            android:hint="搜索规则名称或条件..."
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="14sp"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp" />
+
+        <Button
+            android:id="@+id/btn_clear_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="清除"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:minHeight="40dp"
+            android:backgroundTint="@color/text_secondary"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:text="暂无自动命令规则\n点击右上角添加新规则"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:gravity="center" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_rules"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+</LinearLayout>

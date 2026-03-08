@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✏️ 命令管理"
+            android:textColor="@color/accent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="➕ 添加新命令"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_command_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="命令名称"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:backgroundTint="@color/accent"
+                android:layout_marginEnd="8dp" />
+
+            <Spinner
+                android:id="@+id/spinner_command_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/accent" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_command_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="命令描述（可选）"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:backgroundTint="@color/accent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="命令示例："
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_command_example"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="输入命令示例"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:backgroundTint="@color/accent" />
+
+            <Button
+                android:id="@+id/btn_variables"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📌 变量"
+                android:textSize="12sp"
+                android:minWidth="60dp"
+                android:backgroundTint="@color/accent"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_variables"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/purple_transparent"
+            android:padding="12dp"
+            android:visibility="gone"
+            android:maxHeight="300dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可用的变量，点击自动插入："
+                android:textColor="@color/accent_light"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:rowCount="4"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
+
+                <Button
+                    android:id="@+id/btn_var_respawn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="📍 复活点"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/info"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_charname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="👤 角色名"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/warning"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_tribe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="👥 同部落"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/purple"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_level"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="📊 玩家等级"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_strength"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="💪 玩家力量"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_agility"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="🏃 玩家灵活"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_vitality"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="❤️ 玩家活力"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_grit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="⚡ 玩家毅力"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_authority"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="👑 玩家权威"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btn_var_expertise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="2dp"
+                    android:text="🎒 玩家专长"
+                    android:textSize="10sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success"
+                    android:gravity="center" />
+
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@复活点坐标：游戏中必须要有床，且首次放置床铺后需要自杀一次才能激活，构建传送到复活点命令示例：con 索引 TeleportPlayer @复活点坐标"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@角色名：自动触发命令如果关键词设置开头为'cs'，那么游戏中必须输入'cs@角色名'，只有@存在才能让本系统获取角色名。构建传送到玩家身边的命令示例：con 索引 TeleportPlayer @角色名"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@同部落角色名：只对同部落的玩家起作用，适合PVP模式，注意两个人都必须要有床且同在一个部落。构建传送到同部落玩家身边：con 索引 TeleportPlayer @同部落角色名"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@玩家属性（等级/力量/灵活/活力/毅力/权威/专长）：获取玩家的属性数值，支持数学运算（+、-、*、/），例如：con 索引 setstat AttributeMight @玩家力量+1，如果@玩家力量是20，+1则是21"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_command"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="💾 添加命令"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/success" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/text_hint"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="📋 现有命令"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_filter_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/accent" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_commands"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</ScrollView>

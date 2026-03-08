@@ -1,0 +1,7 @@
+requests
+flask
+nudenet
+Pillow
+mcrcon
+openai
+qq-botpy

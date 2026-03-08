@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_search_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="搜索角色名..."
+        android:inputType="text"
+        style="@style/EditTextStyle" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/text_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:text="加载中..." />
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_card"
+    android:layout_margin="4dp"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/text_rule_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="规则名称"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_conditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="触发条件"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/text_secondary_conditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="二级条件"
+        android:textColor="@color/warning"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="执行动作"
+        android:textColor="@color/accent_light"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/text_after_execute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="执行后操作"
+        android:textColor="@color/success"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:minHeight="32dp"
+            android:backgroundTint="@color/info" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:minHeight="32dp"
+            android:backgroundTint="@color/error" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询金额 - 游戏商城</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 30px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #ffd700, #ffec8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        .search-section {
+            background: linear-gradient(180deg, #1e3a5f 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 30px;
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-header .icon {
+            font-size: 2rem;
+        }
+
+        .search-header h2 {
+            font-size: 1.3rem;
+            color: #6495ed;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+
+        .form-group input {
+            padding: 14px;
+            border: 2px solid rgba(100, 149, 237, 0.3);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #6495ed;
+            box-shadow: 0 0 20px rgba(100, 149, 237, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .query-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .query-btn:hover {
+            background: linear-gradient(45deg, #2980b9, #3498db);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .query-btn:active {
+            transform: translateY(0);
+        }
+
+        .query-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 25px;
+            padding: 12px 15px;
+            background: rgba(100, 149, 237, 0.1);
+            border-radius: 10px;
+            color: #6495ed;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(100, 149, 237, 0.2);
+            color: #8bb8f5;
+        }
+
+        .result-section {
+            background: linear-gradient(180deg, #1e3a5f 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 400px;
+            color: #666;
+            text-align: center;
+        }
+
+        .result-placeholder .icon {
+            font-size: 5rem;
+            opacity: 0.3;
+            margin-bottom: 20px;
+        }
+
+        .result-placeholder p {
+            font-size: 1.1rem;
+        }
+
+        .result-container {
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-summary {
+            background: linear-gradient(135deg, #1e3a5f, #2d5a87);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-info h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .user-info .player-count {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .total-gold {
+            text-align: right;
+        }
+
+        .total-gold .label {
+            display: block;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .total-gold .amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .players-section {
+            margin-top: 10px;
+        }
+
+        .players-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .players-header h3 {
+            font-size: 1.2rem;
+            color: #6495ed;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .player-search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+
+        .player-search-box .icon {
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+
+        .player-search-box input {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            width: 150px;
+        }
+
+        .player-search-box input::placeholder {
+            color: #666;
+        }
+
+        .players-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .player-item:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .player-item.hidden {
+            display: none;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .player-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(100, 149, 237, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .player-name {
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .player-gold {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .error-result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 400px;
+            color: #e74c3c;
+            text-align: center;
+        }
+
+        .error-result .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .error-result p {
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 800px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .search-section {
+                position: static;
+            }
+
+            .user-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .total-gold {
+                text-align: center;
+            }
+
+            .players-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <span class="icon">🔍</span>
+            <h1>查询玩家金额</h1>
+        </header>
+
+        <div class="content-wrapper">
+            <aside class="search-section">
+                <div class="search-header">
+                    <span class="icon">👤</span>
+                    <h2>用户查询</h2>
+                </div>
+
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="username">输入用户名</label>
+                        <input type="text" id="username" placeholder="请输入要查询的用户名..." autocomplete="off">
+                    </div>
+                    <button class="query-btn" id="queryBtn">
+                        🔍 查询金额
+                    </button>
+                </div>
+
+            </aside>
+
+            <main class="result-section">
+                <div class="result-placeholder" id="placeholder">
+                    <span class="icon">🎮</span>
+                    <p>输入用户名查询玩家金额信息</p>
+                </div>
+
+                <div class="result-container" id="resultContainer">
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const usernameInput = document.getElementById('username');
+        const queryBtn = document.getElementById('queryBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const placeholder = document.getElementById('placeholder');
+
+        usernameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                queryGold();
+            }
+        });
+
+        queryBtn.addEventListener('click', queryGold);
+
+        async function queryGold() {
+            const username = usernameInput.value.trim();
+
+            if (!username) {
+                alert('请输入用户名');
+                return;
+            }
+
+            queryBtn.disabled = true;
+            queryBtn.innerHTML = '🔄 查询中...';
+            placeholder.style.display = 'flex';
+            resultContainer.classList.remove('show');
+
+            try {
+                const response = await fetch(`/api/shop/query?username=${encodeURIComponent(username)}`);
+                const result = await response.json();
+
+                placeholder.style.display = 'none';
+
+                if (result.success) {
+                    let html = `
+                        <div class="user-summary">
+                            <div class="user-avatar">👤</div>
+                            <div class="user-info">
+                                <h3>${username}</h3>
+                                <div class="player-count">共 ${result.player_count} 个角色</div>
+                            </div>
+                            <div class="total-gold">
+                                <span class="label">总金额</span>
+                                <span class="amount">
+                                    <span>🪙</span>
+                                    <span>${result.total_gold.toLocaleString()}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="players-section">
+                            <div class="players-header">
+                                <h3>👥 角色列表</h3>
+                                <div class="player-search-box">
+                                    <span class="icon">🔍</span>
+                                    <input type="text" id="playerSearch" placeholder="搜索角色名称...">
+                                </div>
+                            </div>
+                            <div class="players-list" id="playersList">
+                    `;
+
+                    if (result.players && result.players.length > 0) {
+                        result.players.forEach((player, index) => {
+                            html += `
+                                <div class="player-item" data-name="${(player.char_name || '').toLowerCase()}">
+                                    <div class="player-info">
+                                        <div class="player-icon">🎮</div>
+                                        <span class="player-name">${player.char_name || '未知角色'}</span>
+                                    </div>
+                                    <span class="player-gold">
+                                        🪙 ${(player.gold || 0).toLocaleString()}
+                                    </span>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        html += `
+                            <div class="player-item">
+                                <span style="color: #888;">该用户暂无角色</span>
+                            </div>
+                        `;
+                    }
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+
+                    resultContainer.innerHTML = html;
+
+                    document.getElementById('playerSearch').addEventListener('input', (e) => {
+                        const keyword = e.target.value.toLowerCase();
+                        document.querySelectorAll('.player-item').forEach(item => {
+                            const name = item.dataset.name || '';
+                            if (name.includes(keyword)) {
+                                item.classList.remove('hidden');
+                            } else {
+                                item.classList.add('hidden');
+                            }
+                        });
+                    });
+                } else {
+                    resultContainer.innerHTML = `
+                        <div class="error-result">
+                            <div class="icon">❌</div>
+                            <p>${result.message}</p>
+                        </div>
+                    `;
+                }
+
+                resultContainer.classList.add('show');
+            } catch (error) {
+                placeholder.style.display = 'none';
+                resultContainer.innerHTML = `
+                    <div class="error-result">
+                        <div class="icon">❌</div>
+                        <p>查询失败，请稍后重试</p>
+                    </div>
+                `;
+                resultContainer.classList.add('show');
+            }
+
+            queryBtn.disabled = false;
+            queryBtn.innerHTML = '🔍 查询金额';
+        }
+    </script>
+</body>
+</html>

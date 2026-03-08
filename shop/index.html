@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏪 游戏商城 - RCON客户端</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="shop-container">
+        <header class="shop-header">
+            <div class="shop-title">
+                <span class="icon">🏪</span>
+                <h1>游戏商城</h1>
+            </div>
+            <div class="header-actions" id="headerActions">
+                <button class="share-btn" id="shareBtn" title="分享商店链接">
+                    📤 分享
+                </button>
+                <button class="admin-btn" id="adminBtn" style="display: none;">
+                    ⚙️ 管理
+                </button>
+            </div>
+        </header>
+
+        <div class="shop-main">
+            <aside class="sidebar">
+                <div class="search-box">
+                    <input type="text" placeholder="🔍 搜索商品..." id="searchInput">
+                </div>
+                <div class="category-title">📂 商品分类</div>
+                <ul class="category-list" id="categoryList">
+                    <li class="category-loading">加载中...</li>
+                </ul>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <button id="queryGoldBtn" class="query-gold-btn" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: linear-gradient(45deg, #9b59b6, #8e44ad); border-radius: 10px; color: white; text-decoration: none; font-weight: bold; transition: all 0.3s ease; border: none; cursor: pointer; width: 100%;">
+                        🔍 查询金额
+                    </button>
+                </div>
+            </aside>
+
+            <div class="content-area">
+                <div class="items-grid" id="itemsGrid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="adminModal" style="display: none;">
+        <div class="modal-content admin-modal">
+            <div class="modal-header">
+                <h2>⚙️ 商城管理</h2>
+                <button class="modal-close" id="closeAdminModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="categories">📁 商品分类</button>
+                    <button class="admin-tab" data-tab="products">📦 商品管理</button>
+                </div>
+                
+                <div class="admin-tab-content" id="categoriesTab">
+                    <div class="admin-section">
+                        <h3>添加分类</h3>
+                        <div class="admin-form">
+                            <input type="text" id="newCategoryName" placeholder="分类名称">
+                            <div class="icon-picker-container">
+                                <input type="text" id="newCategoryIcon" placeholder="点击下方选择图标" readonly>
+                                <div class="icon-picker" id="categoryIconPicker">
+                                    <div class="icon-option" data-icon="📁">📁</div>
+                                    <div class="icon-option" data-icon="📂">📂</div>
+                                    <div class="icon-option" data-icon="🗂️">🗂️</div>
+                                    <div class="icon-option" data-icon="📊">📊</div>
+                                    <div class="icon-option" data-icon="📈">📈</div>
+                                    <div class="icon-option" data-icon="📉">📉</div>
+                                    <div class="icon-option" data-icon="🎮">🎮</div>
+                                    <div class="icon-option" data-icon="🎲">🎲</div>
+                                    <div class="icon-option" data-icon="🎯">🎯</div>
+                                    <div class="icon-option" data-icon="🏆">🏆</div>
+                                    <div class="icon-option" data-icon="🥇">🥇</div>
+                                    <div class="icon-option" data-icon="💎">💎</div>
+                                    <div class="icon-option" data-icon="💰">💰</div>
+                                    <div class="icon-option" data-icon="🪙">🪙</div>
+                                    <div class="icon-option" data-icon="⚔️">⚔️</div>
+                                    <div class="icon-option" data-icon="🛡️">🛡️</div>
+                                    <div class="icon-option" data-icon="🧪">🧪</div>
+                                    <div class="icon-option" data-icon="🔮">🔮</div>
+                                    <div class="icon-option" data-icon="❤️">❤️</div>
+                                    <div class="icon-option" data-icon="🧡">🧡</div>
+                                    <div class="icon-option" data-icon="💛">💛</div>
+                                    <div class="icon-option" data-icon="💚">💚</div>
+                                    <div class="icon-option" data-icon="💙">💙</div>
+                                    <div class="icon-option" data-icon="💜">💜</div>
+                                    <div class="icon-option" data-icon="🖤">🖤</div>
+                                    <div class="icon-option" data-icon="🤍">🤍</div>
+                                    <div class="icon-option" data-icon="🍎">🍎</div>
+                                    <div class="icon-option" data-icon="🍊">🍊</div>
+                                    <div class="icon-option" data-icon="🍋">🍋</div>
+                                    <div class="icon-option" data-icon="🍇">🍇</div>
+                                    <div class="icon-option" data-icon="🍉">🍉</div>
+                                    <div class="icon-option" data-icon="🍓">🍓</div>
+                                    <div class="icon-option" data-icon="🍒">🍒</div>
+                                    <div class="icon-option" data-icon="🔑">🔑</div>
+                                    <div class="icon-option" data-icon="🗝️">🗝️</div>
+                                    <div class="icon-option" data-icon="🔒">🔒</div>
+                                    <div class="icon-option" data-icon="🔓">🔓</div>
+                                    <div class="icon-option" data-icon="⚡">⚡</div>
+                                    <div class="icon-option" data-icon="🔥">🔥</div>
+                                    <div class="icon-option" data-icon="❄️">❄️</div>
+                                    <div class="icon-option" data-icon="💧">💧</div>
+                                    <div class="icon-option" data-icon="🌟">🌟</div>
+                                    <div class="icon-option" data-icon="✨">✨</div>
+                                    <div class="icon-option" data-icon="💫">💫</div>
+                                    <div class="icon-option" data-icon="🌙">🌙</div>
+                                    <div class="icon-option" data-icon="☀️">☀️</div>
+                                    <div class="icon-option" data-icon="⭐">⭐</div>
+                                    <div class="icon-option" data-icon="🎵">🎵</div>
+                                    <div class="icon-option" data-icon="🎶">🎶</div>
+                                    <div class="icon-option" data-icon="🎬">🎬</div>
+                                    <div class="icon-option" data-icon="📺">📺</div>
+                                    <div class="icon-option" data-icon="🎮">🎮</div>
+                                    <div class="icon-option" data-icon="👑">👑</div>
+                                    <div class="icon-option" data-icon="👗">👗</div>
+                                    <div class="icon-option" data-icon="👟">👟</div>
+                                    <div class="icon-option" data-icon="🎒">🎒</div>
+                                    <div class="icon-option" data-icon="👜">👜</div>
+                                    <div class="icon-option" data-icon="👓">👓</div>
+                                    <div class="icon-option" data-icon="⌚">⌚</div>
+                                    <div class="icon-option" data-icon="📱">📱</div>
+                                    <div class="icon-option" data-icon="💻">💻</div>
+                                    <div class="icon-option" data-icon="🖥️">🖥️</div>
+                                    <div class="icon-option" data-icon="🎁">🎁</div>
+                                    <div class="icon-option" data-icon="📦">📦</div>
+                                    <div class="icon-option" data-icon="🛒">🛒</div>
+                                    <div class="icon-option" data-icon="🚗">🚗</div>
+                                    <div class="icon-option" data-icon="✈️">✈️</div>
+                                    <div class="icon-option" data-icon="🚀">🚀</div>
+                                    <div class="icon-option" data-icon="⚓">⚓</div>
+                                    <div class="icon-option" data-icon="🏠">🏠</div>
+                                    <div class="icon-option" data-icon="🏰">🏰</div>
+                                    <div class="icon-option" data-icon="🏝️">🏝️</div>
+                                    <div class="icon-option" data-icon="🌴">🌴</div>
+                                    <div class="icon-option" data-icon="🌺">🌺</div>
+                                    <div class="icon-option" data-icon="🌻">🌻</div>
+                                    <div class="icon-option" data-icon="🌹">🌹</div>
+                                    <div class="icon-option" data-icon="🍀">🍀</div>
+                                    <div class="icon-option" data-icon="🎄">🎄</div>
+                                    <div class="icon-option" data-icon="🎃">🎃</div>
+                                    <div class="icon-option" data-icon="🦄">🦄</div>
+                                    <div class="icon-option" data-icon="🐉">🐉</div>
+                                    <div class="icon-option" data-icon="🦖">🦖</div>
+                                    <div class="icon-option" data-icon="🦕">🦕</div>
+                                    <div class="icon-option" data-icon="🐙">🐙</div>
+                                    <div class="icon-option" data-icon="🦑">🦑</div>
+                                    <div class="icon-option" data-icon="🦞">🦞</div>
+                                    <div class="icon-option" data-icon="🦐">🦐</div>
+                                    <div class="icon-option" data-icon="🍕">🍕</div>
+                                    <div class="icon-option" data-icon="🍔">🍔</div>
+                                    <div class="icon-option" data-icon="🍟">🍟</div>
+                                    <div class="icon-option" data-icon="🌭">🌭</div>
+                                    <div class="icon-option" data-icon="🍿">🍿</div>
+                                    <div class="icon-option" data-icon="🧂">🧂</div>
+                                    <div class="icon-option" data-icon="🥤">🥤</div>
+                                    <div class="icon-option" data-icon="☕">☕</div>
+                                    <div class="icon-option" data-icon="🍵">🍵</div>
+                                    <div class="icon-option" data-icon="🍺">🍺</div>
+                                    <div class="icon-option" data-icon="🍻">🍻</div>
+                                    <div class="icon-option" data-icon="🥂">🥂</div>
+                                    <div class="icon-option" data-icon="🍷">🍷</div>
+                                    <div class="icon-option" data-icon="🍹">🍹</div>
+                                    <div class="icon-option" data-icon="🧋">🧋</div>
+                                    <div class="icon-option" data-icon="🧁">🧁</div>
+                                    <div class="icon-option" data-icon="🍩">🍩</div>
+                                    <div class="icon-option" data-icon="🍪">🍪</div>
+                                    <div class="icon-option" data-icon="🍫">🍫</div>
+                                    <div class="icon-option" data-icon="🍬">🍬</div>
+                                    <div class="icon-option" data-icon="🍭">🍭</div>
+                                    <div class="icon-option" data-icon="🥗">🥗</div>
+                                    <div class="icon-option" data-icon="🍜">🍜</div>
+                                    <div class="icon-option" data-icon="🍣">🍣</div>
+                                    <div class="icon-option" data-icon="🍤">🍤</div>
+                                    <div class="icon-option" data-icon="🥟">🥟</div>
+                                    <div class="icon-option" data-icon="🥠">🥠</div>
+                                    <div class="icon-option" data-icon="🥡">🥡</div>
+                                    <div class="icon-option" data-icon="🍲">🍲</div>
+                                    <div class="icon-option" data-icon="🍳">🍳</div>
+                                    <div class="icon-option" data-icon="🥘">🥘</div>
+                                    <div class="icon-option" data-icon="🍱">🍱</div>
+                                    <div class="icon-option" data-icon="🧂">🧂</div>
+                                    <div class="icon-option" data-icon="🥢">🥢</div>
+                                    <div class="icon-option" data-icon="🍽️">🍽️</div>
+                                    <div class="icon-option" data-icon="🔪">🔪</div>
+                                    <div class="icon-option" data-icon="📦">📦</div>
+                                    <div class="icon-option" data-icon="🎁">🎁</div>
+                                    <div class="icon-option" data-icon="💳">💳</div>
+                                    <div class="icon-option" data-icon="🎫">🎫</div>
+                                    <div class="icon-option" data-icon="🎟️">🎟️</div>
+                                    <div class="icon-option" data-icon="🃏">🃏</div>
+                                    <div class="icon-option" data-icon="🪁">🪁</div>
+                                    <div class="icon-option" data-icon="🧸">🧸</div>
+                                    <div class="icon-option" data-icon="🤖">🤖</div>
+                                    <div class="icon-option" data-icon="🎩">🎩</div>
+                                    <div class="icon-option" data-icon="💍">💍</div>
+                                    <div class="icon-option" data-icon="📿">📿</div>
+                                    <div class="icon-option" data-icon="🎀">🎀</div>
+                                    <div class="icon-option" data-icon="🧣">🧣</div>
+                                    <div class="icon-option" data-icon="👕">👕</div>
+                                    <div class="icon-option" data-icon="👖">👖</div>
+                                    <div class="icon-option" data-icon="👘">👘</div>
+                                    <div class="icon-option" data-icon="🥻">🥻</div>
+                                    <div class="icon-option" data-icon="👙">👙</div>
+                                    <div class="icon-option" data-icon="🩱">🩱</div>
+                                    <div class="icon-option" data-icon="👠">👠</div>
+                                    <div class="icon-option" data-icon="👡">👡</div>
+                                    <div class="icon-option" data-icon="👢">👢</div>
+                                    <div class="icon-option" data-icon="👞">👞</div>
+                                    <div class="icon-option" data-icon="🎿">🎿</div>
+                                    <div class="icon-option" data-icon="🛼">🛼</div>
+                                    <div class="icon-option" data-icon="🛷">🛷</div>
+                                    <div class="icon-option" data-icon="🥌">🥌</div>
+                                    <div class="icon-option" data-icon="🎽">🎽</div>
+                                    <div class="icon-option" data-icon="🛶">🛶</div>
+                                    <div class="icon-option" data-icon="🏹">🏹</div>
+                                    <div class="icon-option" data-icon="🧿">🧿</div>
+                                    <div class="icon-option" data-icon="🎱">🎱</div>
+                                    <div class="icon-option" data-icon="🎳">🎳</div>
+                                    <div class="icon-option" data-icon="🎰">🎰</div>
+                                    <div class="icon-option" data-icon="🧩">🧩</div>
+                                    <div class="icon-option" data-icon="🔭">🔭</div>
+                                    <div class="icon-option" data-icon="🔬">🔬</div>
+                                    <div class="icon-option" data-icon="💊">💊</div>
+                                    <div class="icon-option" data-icon="💉">💉</div>
+                                    <div class="icon-option" data-icon="🩺">🩺</div>
+                                    <div class="icon-option" data-icon="🩹">🩹</div>
+                                    <div class="icon-option" data-icon="🧴">🧴</div>
+                                    <div class="icon-option" data-icon="🧽">🧽</div>
+                                    <div class="icon-option" data-icon="🧹">🧹</div>
+                                    <div class="icon-option" data-icon="🧲">🧲</div>
+                                    <div class="icon-option" data-icon="🔌">🔌</div>
+                                    <div class="icon-option" data-icon="🔋">🔋</div>
+                                    <div class="icon-option" data-icon="🔦">🔦</div>
+                                    <div class="icon-option" data-icon="💡">💡</div>
+                                    <div class="icon-option" data-icon="🕯️">🕯️</div>
+                                    <div class="icon-option" data-icon="🕰️">🕰️</div>
+                                    <div class="icon-option" data-icon="📲">📲</div>
+                                    <div class="icon-option" data-icon="🖨️">🖨️</div>
+                                    <div class="icon-option" data-icon="⌨️">⌨️</div>
+                                    <div class="icon-option" data-icon="🖱️">🖱️</div>
+                                    <div class="icon-option" data-icon="🖲️">🖲️</div>
+                                    <div class="icon-option" data-icon="💽">💽</div>
+                                    <div class="icon-option" data-icon="💾">💾</div>
+                                    <div class="icon-option" data-icon="💿">💿</div>
+                                    <div class="icon-option" data-icon="📀">📀</div>
+                                    <div class="icon-option" data-icon="📹">📹</div>
+                                    <div class="icon-option" data-icon="🎥">🎥</div>
+                                    <div class="icon-option" data-icon="🎞️">🎞️</div>
+                                    <div class="icon-option" data-icon="📽️">📽️</div>
+                                    <div class="icon-option" data-icon="📻">📻</div>
+                                    <div class="icon-option" data-icon="🎙️">🎙️</div>
+                                    <div class="icon-option" data-icon="🎚️">🎚️</div>
+                                    <div class="icon-option" data-icon="🎛️">🎛️</div>
+                                    <div class="icon-option" data-icon="🕹️">🕹️</div>
+                                    <div class="icon-option" data-icon="🎨">🎨</div>
+                                    <div class="icon-option" data-icon="🎭">🎭</div>
+                                    <div class="icon-option" data-icon="🎪">🎪</div>
+                                    <div class="icon-option" data-icon="🎗️">🎗️</div>
+                                    <div class="icon-option" data-icon="🎝️">🎝️</div>
+                                    <div class="icon-option" data-icon="🎠">🎠</div>
+                                    <div class="icon-option" data-icon="🎡">🎡</div>
+                                    <div class="icon-option" data-icon="🎢">🎢</div>
+                                    <div class="icon-option" data-icon="🎤">🎤</div>
+                                    <div class="icon-option" data-icon="🎦">🎦</div>
+                                    <div class="icon-option" data-icon="🎧">🎧</div>
+                                    <div class="icon-option" data-icon="🎷">🎷</div>
+                                    <div class="icon-option" data-icon="🎸">🎸</div>
+                                    <div class="icon-option" data-icon="🎹">🎹</div>
+                                    <div class="icon-option" data-icon="🎺">🎺</div>
+                                    <div class="icon-option" data-icon="🎻">🎻</div>
+                                    <div class="icon-option" data-icon="🎼">🎼</div>
+                                    <div class="icon-option" data-icon="🎾">🎾</div>
+                                </div>
+                            </div>
+                            <input type="number" id="newCategorySort" placeholder="排序序号" value="0">
+                            <button class="admin-btn-primary" id="addCategoryBtn">添加分类</button>
+                            <button class="admin-btn-secondary" id="cancelCategoryEditBtn" style="display: none;">取消编辑</button>
+                        </div>
+                    </div>
+                    <div class="admin-section">
+                        <h3>分类列表</h3>
+                        <div class="admin-list" id="categoryAdminList">
+                            <div class="loading">加载中...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-tab-content" id="productsTab" style="display: none;">
+                    <div class="admin-section">
+                        <h3>添加/编辑商品</h3>
+                        <div class="admin-form">
+                            <input type="hidden" id="editProductId">
+                            <select id="productCategory">
+                                <option value="">选择分类</option>
+                            </select>
+                            <input type="text" id="productName" placeholder="商品名称">
+                            <div class="image-upload-container">
+                                <input type="text" id="productImage" placeholder="商品图片路径" readonly style="display: none;">
+                                <input type="file" id="productImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp,image/bmp" style="display: none;">
+                                <button class="upload-btn" id="uploadProductImageBtn">上传图片</button>
+                                <div class="image-preview" id="productImagePreview"></div>
+                            </div>
+                            <textarea id="productDesc" placeholder="商品描述" rows="2"></textarea>
+                            <input type="number" id="productPrice" placeholder="价格" step="0.01">
+                            <input type="number" id="productSort" placeholder="排序序号" value="0">
+                            <button class="admin-btn-primary" id="saveProductBtn">保存商品</button>
+                            <button class="admin-btn-secondary" id="cancelEditBtn" style="display: none;">取消编辑</button>
+                        </div>
+                    </div>
+                    <div class="admin-section">
+                        <h3>商品列表</h3>
+                        <div class="admin-list" id="productAdminList">
+                            <div class="loading">加载中...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="queryGoldModal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>🔍 查询金币</h2>
+                <button class="modal-close" id="closeQueryGoldModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-form">
+                    <input type="text" id="queryGoldUsername" placeholder="用户名" readonly>
+                    <input type="text" id="queryGoldSearch" placeholder="🔍 搜索角色名...">
+                </div>
+                <div id="queryGoldResult" style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 10px; display: none;">
+                    <div id="queryGoldPlayerList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="imagePreviewModal" style="display: none; z-index: 2000;">
+        <div class="modal-content" style="max-width: 90vw; max-height: 90vh; padding: 0; background: transparent; box-shadow: none;">
+            <button class="modal-close" id="closeImagePreviewModal" style="position: fixed; top: 20px; right: 20px; z-index: 10000; font-size: 40px; color: white; background: rgba(0,0,0,0.5); border-radius: 50%; width: 50px; height: 50px; border: none; cursor: pointer;">&times;</button>
+            <div style="display: flex; justify-content: center; align-items: center; height: 90vh;">
+                <img id="imagePreviewImg" src="" alt="商品图片" style="max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="shareToast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message">已复制商店链接，分享给好友访问吧！</span>
+    </div>
+
+    <div class="modal" id="productDetailModal" style="display: none;">
+        <div class="modal-content product-detail-modal">
+            <div class="modal-header">
+                <h2 id="detailProductName">商品详情</h2>
+                <button class="modal-close" id="closeProductDetailModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-detail-image" id="detailProductImage"></div>
+                <div class="product-detail-info">
+                    <div class="product-detail-price" id="detailProductPrice"></div>
+                    <div class="product-detail-desc" id="detailProductDesc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

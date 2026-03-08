@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edit_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_card"
+        android:hint="搜索奴隶名称或ID..."
+        android:textColorHint="@color/text_secondary"
+        android:textColor="@color/text_primary"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="13sp"
+        android:singleLine="true" />
+
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/error"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/layout_thralls_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+</LinearLayout>

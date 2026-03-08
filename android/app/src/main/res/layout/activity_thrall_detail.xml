@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progress_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📋 基本信息"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="奴隶ID:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_thrall_id" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="奴隶名称:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_thrall_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="等级:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_level" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/success" android:textSize="12sp" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="生命值:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_health" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/error" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="坐标:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_position" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/info" android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_teleport"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:text="📍 传送指定玩家到该处"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:backgroundTint="@color/purple" />
+
+                <LinearLayout
+                    android:id="@+id/layout_teleport_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/spinner_players"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_card" />
+
+                    <TextView
+                        android:id="@+id/text_teleport_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="8dp"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👤 归属信息"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="归属玩家:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_owner_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="所属部落:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_guild_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="部落ID:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_guild_id" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📊 属性信息"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="饱食度" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:id="@+id/text_food" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/warning" android:textSize="14sp" android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="力量" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:id="@+id/text_strength" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/error" android:textSize="14sp" android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="灵活" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:id="@+id/text_agility" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/success" android:textSize="14sp" android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="活力" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:id="@+id/text_vitality" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/info" android:textSize="14sp" android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="毅力" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:id="@+id/text_grit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/purple" android:textSize="14sp" android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎒 背包物品"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layout_backpack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/text_backpack_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无物品"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⭐ 特权信息"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="奴隶原名:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_thrall_type" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="奴隶类型:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_perk_type" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="特权1:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_perk_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/warning" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="特权2:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_perk_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/warning" android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="特权3:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                    <TextView android:id="@+id/text_perk_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/warning" android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🛡️ 装备栏"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layout_equipment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/text_equipment_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无装备"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

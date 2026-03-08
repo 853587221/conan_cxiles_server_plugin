@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCON客户端 - 流放者柯南服务器</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('[Service Worker] 注册成功:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('[Service Worker] 注册失败:', error);
+                    });
+            });
+        }
+    </script>
+    <script src="scripts/itemConfig.js"></script>
+    <script src="scripts/autoTrigger.js"></script>
+    <script src="scripts/playerManage.js"></script>
+    <script src="scripts/playerInventory.js"></script>
+    <script src="scripts/playerThralls.js"></script>
+    <script src="scripts/playerInfo.js"></script>
+    <script src="scripts/itemOperations.js"></script>
+    <script src="scripts/conditionSettings.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ 流放者柯南管理器</h1>
+            <p>流放者柯南纯净服专用</p>
+        </div>
+        
+        <div class="connection-panel">
+            <div class="help-icon-container">
+                <span class="help-icon">❓</span>
+                <div class="help-tooltip">
+                    <div class="help-content">
+                        <h4>1. 如何连接RCON</h4>
+                        <p>首先确保你的游戏服务端已经开启了rcon功能！！！不知道怎么开启就去问AI，问百度流放者柯南怎么开启rcon。在网页输入你的服务器地址、rcon密码、rcon端口点击连接。</p>
+                        <h4>2. 如何发送命令</h4>
+                        <p>如果你是新手，你可以尝试去玩家命令分类中找到"获取在线玩家列表的命令"，点击它，它会出现到命令输入框，然后点击发送，这样能获取到在线玩家的信息，其中"Idx"就是对应玩家索引编号，当你想执行其它命令给指定玩家的时候，选择你想要的命令，然后把这个索引编号替换掉"索引"这两个字，就可以实现给该玩家执行这个命令，比如你想让某个玩家飞行，这个玩家索引编号是3，那么命令就应该是con 3 fly</p>
+                        <h4>3.添加命令分类</h4>
+                        <p>点击编辑分类按钮，输入分类名称、描述，点击添加分类按钮就可以添加一个新的命令分类，命令分类可以更换管理命令，当然你也可以把它当成是礼包，在自动命令里选择该分类作为命令条件，会每隔一秒执行该分类的所有命令，直到完成所有命令。</p>
+                        <h4>4.添加命令</h4>
+                        <p>除了系统预设好的命令，你还可以添加其它命令，如果你能获取的到其它命令。点击编辑命令按钮，输入命令名称，选择命令分类，输入命令描述，输入命令，比如飞行命令是con+空格+索引+空格+fly，你也可以在添加命令的界面往下滑，随便选一个命令点击编辑，可以作为参考。</p>
+                        <h4>5. 自动触发命令</h4>
+                        <p>❗❗❗你必须要下载插件并放到到服务端的\ConanSandbox\Saved文件夹目录下，使用同样的账号登录才能使用自动命令功能，只要软件登录好一直挂着就行了，网页可以关闭，你可以点击自动命令按钮，在弹出的窗口顶部找到插件的下载地址❗❗❗关键词是玩家在游戏内输入的聊天信息，检测到就能触发执行命令。金额可以给玩家设定金额用于购买游戏内的物品。标签可以给玩家贴上标签，满足标签权限的数值就能触发条件，比如管理员你可以设置100或者多少都可以，你能记住就行了。等级是玩家游戏内的角色等级，满足等级要求就可以触发命令。新玩家代表着新玩家进来可以触发命令，可以给新玩家赠送礼包之类的东西。</p>
+                        <h4>6.新人礼包怎么弄</h4>
+                        <p>在自动命令按钮里，添加触发条件，标签等于0和新玩家，新玩家的标签默认都为0，所以会通过，然后选择你要执行的命令分类（详情看第3条教程），执行后操作选择金额强制0或者100（设置100相当于新玩家默认赠送100金额，选择强制是因为可能玩家会频繁重建角色刷金额），设置标签为1，则是为了避免标签为0的人重复领取礼包。</p>
+                        <h4>7.传送点怎么弄</h4>
+                        <p>游戏内摁【Ctrl】+【Alt】+【Shift】+【L】键获取当前角色的位置（再摁一次则取消显示），再摁一次【Esc】释放鼠标，点一下那串数字（坐标）全部选中，然后【Ctrl】+【C】复制这串字，把复制的文字粘贴到网页添加命令比如   con 索引 TeleportPlayer 23132.306641 133044.625 -8286.78125   添加自动触发命令规则，关键词：传送沉洞，则游戏中玩家输入：传送沉洞就会传送到这个坐标位置上，你也可以用更简约的关键词，比如：CD</p>
+                    </div>
+                </div>
+            </div>
+            <div class="connection-form">
+                <div class="form-group">
+                    <label for="host">服务器地址:</label>
+                    <input type="text" id="host" class="form-control" value="127.0.0.1" placeholder="输入服务器IP地址">
+                </div>
+                <div class="form-group">
+                    <label for="password">RCON密码:</label>
+                    <input type="password" id="password" class="form-control" placeholder="输入RCON密码">
+                </div>
+                <div class="form-group">
+                    <label for="port">RCON端口:</label>
+                    <input type="number" id="port" class="form-control" value="25575" placeholder="输入RCON端口">
+                </div>
+                <div class="form-group" id="saveInfoRow">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="saveConnection" checked>
+                        <span>💾 保存信息</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button id="connectBtn" class="btn btn-connect">🔗 连接</button>
+                </div>
+                <div class="form-group">
+                    <button id="autoExecuteBtn" class="btn" style="background: linear-gradient(45deg, #4caf50, #66bb6a); color: #e8f5e8;">
+                        ⚡ 自动命令
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button id="playerManageBtn" class="btn" style="background: linear-gradient(45deg, #ff9800, #ffb74d); color: #fff8e1;">
+                        👥 玩家管理
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button id="moreBtn" class="btn" style="background: linear-gradient(45deg, #9c27b0, #ab47bc); color: #fff;">
+                        📋 更多
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="console-panel">
+                <div class="console-header">
+                    <div class="console-title">💻 服务器控制台</div>
+                    <div class="console-info">
+                        <div class="console-info-text">QQ群：1067304378  -  本程序免费使用，有问题加群反馈建议和获取插件更新最新动态。</div>
+                    </div>
+                    <button class="btn btn-online-players">👥 在线玩家</button>
+                    <button class="btn btn-clear">🗑️ 清空</button>
+                </div>
+                <div id="consoleOutput" class="console-output">
+                    <div style="color: #9c27b0; font-style: italic;">=== RCON客户端已就绪 ===</div>
+                    <div style="color: #b0bec5;">请输入服务器连接信息并点击连接...</div>
+                </div>
+                <div class="console-input-area">
+                    <div class="rcon-mode-selector">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="rconModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span style="color: #b0bec5; font-size: 13px; margin-left: 10px;">无公网模式</span>
+                    </div>
+                    <input type="text" id="commandInput" class="console-input" placeholder="输入RCON命令..." disabled>
+                    <button id="sendBtn" class="btn btn-send" disabled>📤 发送</button>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="quick-commands">
+                    <div class="quick-commands-header">
+                        <h3>⚡ 快捷命令</h3>
+                        <button id="editCategoriesBtn" class="btn btn-add-command">📂 编辑分类</button>
+                        <button id="editCommandsBtn" class="btn btn-add-command">✏️ 编辑命令</button>
+                    </div>
+                    <div class="category-filter">
+                    <div class="filter-label">📂 分类筛选:</div>
+                    <select id="categoryFilter" class="category-select">
+                        <option value="all">全部命令</option>
+                    </select>
+                </div>
+                <!-- 命令列表容器 -->
+                <div id="commandsList"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div id="statusDot" class="status-dot"></div>
+                <div id="statusText" class="status-text">未连接</div>
+                <div id="serverStats" class="server-stats-inline" style="display: none; margin-left: 20px; color: #b0bec5; font-size: 13px;"></div>
+            </div>
+            <button id="logoutBtn" class="btn btn-logout">🚪 退出登录</button>
+        </div>
+    </div>
+
+    <!-- 自动触发命令模态框模板 -->
+    <template id="autoExecuteModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 1200px;">
+                <div class="modal-header">
+                    <h3>⚡ 自动触发命令</h3>
+                    <span class="info-tag" onclick="window.location.href='/plug-in/RCONDesktopClient.exe'" title="点击下载插件">
+                        你需要点击这里把插件下载到柯南服务端的ConanSandbox\Saved目录下登录同账号才能使用这些功能！
+                    </span>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" style="display: flex; gap: 20px; align-items: flex-start; height: 70vh;">
+                    <!-- 左侧：编辑自动命令 -->
+                    <div class="modal-section" style="flex: 1; min-width: 0; height: 100%; overflow-y: auto;">
+                        <div class="form-group">
+                            <label for="ruleNameInput">规则名称：</label>
+                            <input type="text" id="ruleNameInput" class="form-control" placeholder="输入规则名称（可选）" maxlength="100">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>触发条件（点击添加）：</label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 10px 0;">
+                                <button type="button" class="condition-btn" data-condition="keyword">
+                                    🔤 关键词
+                                </button>
+                                <button type="button" class="condition-btn secondary-btn" data-condition="amount">
+                                    💰 *金额*
+                                </button>
+                                <button type="button" class="condition-btn secondary-btn" data-condition="tag">
+                                    🏷️ *权限标签*
+                                </button>
+                                <button type="button" class="condition-btn" data-condition="level">
+                                    📊 等级
+                                </button>
+                                <button type="button" class="condition-btn" data-condition="playtime">
+                                    ⏱️ 在线时间
+                                </button>
+                                <button type="button" class="condition-btn" data-condition="new_player">
+                                    🧒 新玩家
+                                </button>
+                                <button type="button" class="condition-btn secondary-btn" data-condition="server_time">
+                                    📅 *时间条件*
+                                </button>
+                                <button type="button" class="condition-btn secondary-btn" data-condition="vip">
+                                    👑 *会员*
+                                </button>
+                                <button type="button" class="condition-btn secondary-btn" data-condition="item">
+                                    🎒 * 背包物品 *
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 已添加的一级条件列表 -->
+                        <div id="addedConditionsList" style="margin-top: 15px;"></div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label for="executeType">执行类型：</label>
+                            <select id="executeType" class="form-control">
+                                <option value="single">单个命令</option>
+                                <option value="category">命令分类（每秒陆续执行一个命令，直至完成所有命令）</option>
+                                <option value="no_operation">不操作</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 单个命令选择 -->
+                        <div class="execute-setting" id="singleCommandSetting">
+                            <div class="form-group">
+                                <label for="singleCommandSelect">选择命令：</label>
+                                <div class="custom-select-wrapper" style="position: relative;">
+                                    <input type="text" id="singleCommandSearch" class="form-control" placeholder="搜索命令名称或描述..." style="width: 100%;">
+                                    <div id="singleCommandOptions" class="custom-select-options" style="display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 300px; overflow-y: auto; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; z-index: 1000; margin-top: 4px;">
+                                    </div>
+                                    <input type="hidden" id="singleCommandSelect" value="">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 命令分类选择 -->
+                        <div class="execute-setting" id="categoryCommandSetting" style="display: none;">
+                            <div class="form-group">
+                                <label for="categorySelect">选择命令分类：</label>
+                                <select id="categorySelect" class="form-control">
+                                    <!-- 动态加载分类列表 -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label>金额操作：</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <select id="amountOperation" class="form-control" style="flex: 1;">
+                                    <option value="">不操作</option>
+                                    <option value="add">增加</option>
+                                    <option value="deduct">扣除</option>
+                                    <option value="set">强行指定</option>
+                                </select>
+                                <input type="number" id="amountValue" class="form-control" placeholder="金额" min="0" step="0.01" style="flex: 1;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>设置权限标签：</label>
+                            <input type="text" id="setTag" class="form-control" placeholder="输入要设置的权限标签值（可选）">
+                        </div>
+                        <div class="form-group">
+                            <label>私发通知消息（条件未通过时）：</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <textarea id="failNotificationMessage" class="form-control" rows="3" placeholder="条件未通过时发送给玩家的通知消息（可选）" style="flex: 1;"></textarea>
+                                <button id="insertFailNotificationVariableBtn" class="btn btn-secondary" title="插入变量" style="padding: 4px 8px; font-size: 12px;">📌 插入变量</button>
+                            </div>
+                            <div id="failNotificationVariableList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击下面小块自动插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="fail-notification-variable-btn" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@部落名" style="padding: 6px 12px; background: #795548; border: 1px solid #5d4037; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@部落名</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@金额" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@金额</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@等级" style="padding: 6px 12px; background: #2196f3; border: 1px solid #1976d2; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@等级</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@在线时间" style="padding: 6px 12px; background: #ff9800; border: 1px solid #f57c00; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@在线时间</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@权限标签" style="padding: 6px 12px; background: #9c27b0; border: 1px solid #7b1fa2; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@权限标签</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@复活点" style="padding: 6px 12px; background: #e91e63; border: 1px solid #c2185b; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@复活点</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@会员剩余时间" style="padding: 6px 12px; background: #ffc107; border: 1px solid #ffa000; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@会员剩余时间</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家等级" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家等级</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家力量" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家力量</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家灵活" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家灵活</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家活力" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家活力</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家毅力" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家毅力</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家权威" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家权威</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家专长" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家专长</button>
+                                    <button class="fail-notification-variable-btn" data-variable="@玩家当前坐标" style="padding: 6px 12px; background: #00bcd4; border: 1px solid #0097a7; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家当前坐标</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>私发通知消息（条件通过后）：</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <textarea id="notificationMessage" class="form-control" rows="3" placeholder="条件通过后发送给玩家的通知消息（可选）" style="flex: 1;"></textarea>
+                                <button id="insertNotificationVariableBtn" class="btn btn-secondary" title="插入变量" style="padding: 4px 8px; font-size: 12px;">📌 插入变量</button>
+                            </div>
+                            <div id="notificationVariableList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击下面小块自动插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="notification-variable-btn" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                    <button class="notification-variable-btn" data-variable="@部落名" style="padding: 6px 12px; background: #795548; border: 1px solid #5d4037; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@部落名</button>
+                                    <button class="notification-variable-btn" data-variable="@金额" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@金额</button>
+                                    <button class="notification-variable-btn" data-variable="@等级" style="padding: 6px 12px; background: #2196f3; border: 1px solid #1976d2; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@等级</button>
+                                    <button class="notification-variable-btn" data-variable="@在线时间" style="padding: 6px 12px; background: #ff9800; border: 1px solid #f57c00; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@在线时间</button>
+                                    <button class="notification-variable-btn" data-variable="@权限标签" style="padding: 6px 12px; background: #9c27b0; border: 1px solid #7b1fa2; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@权限标签</button>
+                                    <button class="notification-variable-btn" data-variable="@复活点" style="padding: 6px 12px; background: #e91e63; border: 1px solid #c2185b; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@复活点</button>
+                                    <button class="notification-variable-btn" data-variable="@会员剩余时间" style="padding: 6px 12px; background: #ffc107; border: 1px solid #ffa000; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@会员剩余时间</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家等级" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家等级</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家力量" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家力量</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家灵活" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家灵活</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家活力" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家活力</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家毅力" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家毅力</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家权威" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家权威</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家专长" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家专长</button>
+                                    <button class="notification-variable-btn" data-variable="@玩家当前坐标" style="padding: 6px 12px; background: #00bcd4; border: 1px solid #0097a7; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家当前坐标</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <button id="saveAutoExecuteBtn" class="btn btn-primary" style="background: linear-gradient(45deg, #4caf50, #66bb6a); color: #e8f5e8;">
+                                💾 保存自动触发规则
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧：已保存的规则 -->
+                    <div class="modal-section" style="flex: 1; min-width: 0; border-left: 1px solid #333; padding-left: 20px; height: 100%; overflow-y: auto;">
+                        <h4 style="margin-top: 0;">已保存的规则</h4>
+                        <div class="form-group">
+                            <input type="text" id="ruleSearch" class="form-control" placeholder="搜索规则名称、条件或命令..." style="width: 100%;">
+                        </div>
+                        <div id="savedRulesList" style="flex: 1; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 玩家管理模态框模板 -->
+    <template id="playerManageModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 1000px;">
+                <div class="modal-header">
+                    <h3>👥 玩家管理</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="playerSearch">搜索玩家：</label>
+                        <input type="text" id="playerSearch" class="form-control" placeholder="输入玩家名称或ID搜索...">
+                    </div>
+                    <div id="playersList" style="max-height: 500px; overflow-y: auto; margin-top: 20px;">
+                        <div style="color: #b0bec5; font-style: italic; text-align: center; padding: 20px;">
+                            加载中...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 玩家物品信息模态框模板 -->
+    <template id="playerItemsModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 1200px; width: 95%; max-height: 90vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 2px solid #0f3460; display: flex; flex-direction: column;">
+                <div class="modal-header" style="background: linear-gradient(90deg, #e94560 0%, #0f3460 100%); border-bottom: 2px solid #e94560; display: flex; flex-direction: column; position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3 style="color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🎒 物品信息 - <span id="playerItemName">玩家名称</span></h3>
+                        <button class="modal-close" style="color: #fff; font-size: 24px;">&times;</button>
+                    </div>
+                    <span style="color: #b0bec5; font-size: 12px; width: 100%; margin-top: 5px;">提示：仅支持游戏基础物品显示，不支持DLC、集市、奴隶的显示，修改堆叠后这里会显示该物品允许的堆叠的数量，实际数量游戏内为准。</span>
+                </div>
+                <div class="modal-body" style="padding: 20px; overflow-y: auto; flex: 1;">
+                    <!-- 主内容区域：左右布局 -->
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <!-- 左侧：背包区域 -->
+                        <div style="flex: 1; min-width: 0;">
+                            <!-- 搜索和筛选栏 -->
+                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                <div style="flex: 1;">
+                                    <input type="text" id="itemSearch" class="form-control" placeholder="通过物品名称和ID搜索物品。" style="background: rgba(255,255,255,0.1); border: 1px solid #0f3460; color: #fff;">
+                                </div>
+                                <button id="refreshInventoryBtn" class="btn" style="background: linear-gradient(45deg, #2196f3, #42a5f5); color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap;">刷新</button>
+                            </div>
+                            
+                            <!-- 加载指示器 -->
+                            <div id="loadingIndicator" style="display: none; text-align: center; padding: 20px; color: #b0bec5;">
+                                <div>正在加载背包数据...</div>
+                            </div>
+                            
+                            <!-- 背包格子 - 横向5个，竖向滚动，最多500个 -->
+                            <div style="background: rgba(0,0,0,0.3); border: 2px solid #0f3460; border-radius: 8px; padding: 15px; max-height: 450px; overflow-y: auto;">
+                                <div id="backpackGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; grid-auto-rows: min-content;">
+                                    <!-- 背包格子将通过JavaScript动态生成，最多500个 -->
+                                </div>
+                            </div>
+                            
+                            <!-- 快捷栏 - 固定8个 -->
+                            <div style="background: rgba(0,0,0,0.3); border: 2px solid #0f3460; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                                <div style="color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 12px; text-align: center;">⚡ 快捷栏</div>
+                        <div id="hotbarGrid" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; max-width: 600px; margin: 0 auto;">
+                            <!-- 8个快捷栏格子 -->
+                            <div class="hotbar-slot" data-slot="0" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">1</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="1" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">2</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="2" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">3</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="3" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">4</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="4" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">5</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="5" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">6</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="6" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">7</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                            <div class="hotbar-slot" data-slot="7" style="aspect-ratio: 1; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';"><span style="font-size: 20px;">📦</span><span style="position: absolute; top: 2px; left: 4px; color: #b0bec5; font-size: 10px; font-weight: bold;">8</span><span class="item-count" style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 3px; border-radius: 3px; font-size: 9px; display: none;">0</span></div>
+                        </div>
+                    </div>
+                        </div>
+                        
+                        <!-- 右侧：角色属性面板 -->
+                        <div style="width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 15px;">
+                            <!-- 装备栏 - 固定5个 -->
+                            <div style="background: rgba(0,0,0,0.3); border: 2px solid #0f3460; border-radius: 8px; padding: 15px;">
+                                <div style="color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 12px; text-align: center;">🛡️ 装备栏</div>
+                                <div id="equipmentGrid" style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                                    <!-- 头盔 -->
+                                    <div class="equip-slot" data-slot="helmet" style="width: 60px; height: 60px; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';">
+                                        <span style="font-size: 24px;">🪖</span>
+                                    </div>
+                                    <!-- 胸甲 -->
+                                    <div class="equip-slot" data-slot="chest" style="width: 60px; height: 60px; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';">
+                                        <span style="font-size: 24px;">👕</span>
+                                    </div>
+                                    <!-- 手套 -->
+                                    <div class="equip-slot" data-slot="gloves" style="width: 60px; height: 60px; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';">
+                                        <span style="font-size: 24px;">🧤</span>
+                                    </div>
+                                    <!-- 护腿 -->
+                                    <div class="equip-slot" data-slot="legs" style="width: 60px; height: 60px; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';">
+                                        <span style="font-size: 24px;">👖</span>
+                                    </div>
+                                    <!-- 靴子 -->
+                                    <div class="equip-slot" data-slot="boots" style="width: 60px; height: 60px; background: rgba(15, 52, 96, 0.3); border: 2px solid #0f3460; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"  onmouseout="this.style.borderColor='#0f3460'; this.style.background='rgba(15, 52, 96, 0.3)';">
+                                        <span style="font-size: 24px;">👢</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 选中物品详情 -->
+                            <div id="selectedItemDetail" style="background: rgba(0,0,0,0.3); border: 1px solid #0f3460; border-radius: 8px; padding: 15px; min-height: 120px; flex: 1; overflow-y: auto; word-wrap: break-word; overflow-wrap: break-word;">
+                                <div style="color: #e94560; font-weight: bold; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid #0f3460; padding-bottom: 5px;">
+                                    📋 物品详情
+                                </div>
+                                <div id="selectedItemContent" style="color: #b0bec5; font-size: 12px; word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;">
+                                    点击背包物品查看详情
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 更多功能模态框模板 -->
+    <template id="moreModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3>📋 更多功能</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <button id="shopBtn" class="btn" style="background: linear-gradient(45deg, #9c27b0, #ab47bc); color: #fff; padding: 20px; font-size: 16px;">
+                            🏪 游戏商城
+                        </button>
+                        <button id="chatHistoryBtn" class="btn" style="background: linear-gradient(45deg, #2196f3, #42a5f5); color: #fff; padding: 20px; font-size: 16px;">
+                            💬 聊天记录
+                        </button>
+                        <button id="downloadPluginBtn" class="btn" style="background: linear-gradient(45deg, #ff9800, #ffb74d); color: #fff; padding: 20px; font-size: 16px;">
+                            📥 下载插件
+                        </button>
+                        <button id="downloadAndroidAppBtn" class="btn" style="background: linear-gradient(45deg, #4caf50, #66bb6a); color: #fff; padding: 20px; font-size: 16px;">
+                            📱 下载安卓APP
+                        </button>
+                        <button id="aiSettingsBtn" class="btn" style="background: linear-gradient(45deg, #00bcd4, #26c6da); color: #fff; padding: 20px; font-size: 16px;">
+                            🤖 接入AI客服
+                        </button>
+                        <button id="qqBotSettingsBtn" class="btn" style="background: linear-gradient(45deg, #12b7f5, #4fc3f7); color: #fff; padding: 20px; font-size: 16px;">
+                            🤖 QQ机器人
+                        </button>
+                        <button id="dataMigrationBtn" class="btn" style="background: linear-gradient(45deg, #e91e63, #f06292); color: #fff; padding: 20px; font-size: 16px;">
+                            🔄 数据迁移
+                        </button>
+                        <button id="dataCleanupBtn" class="btn" style="background: linear-gradient(45deg, #f44336, #e57373); color: #fff; padding: 20px; font-size: 16px;">
+                            🗑️ 一键清理
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 一键清理模态框模板 -->
+    <template id="dataCleanupModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3>🗑️ 一键清理</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div style="padding: 15px; background: rgba(244, 67, 54, 0.1); border: 1px solid #f44336; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="color: #e57373; font-size: 14px;">
+                            ⚠️ 警告：清理操作不可恢复，请谨慎操作！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #e0e0e0; font-weight: bold; margin-bottom: 10px; display: block;">选择要清理的数据：</label>
+                        <div style="display: grid; gap: 10px;">
+                            <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(244, 67, 54, 0.1); border: 1px solid #f44336; border-radius: 6px; cursor: pointer;">
+                                <input type="checkbox" id="cleanupAllPlayers" value="all_players" style="margin-right: 10px;">
+                                <span>👥 所有玩家数据</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(255, 152, 0, 0.1); border: 1px solid #ff9800; border-radius: 6px; cursor: pointer;">
+                                <input type="checkbox" id="cleanupGold" value="gold" style="margin-right: 10px;">
+                                <span>💰 所有玩家金额</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #9c27b0; border-radius: 6px; cursor: pointer;">
+                                <input type="checkbox" id="cleanupPermission" value="permission_level" style="margin-right: 10px;">
+                                <span>🏷️ 所有玩家权限标签</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(33, 150, 243, 0.1); border: 1px solid #2196f3; border-radius: 6px; cursor: pointer;">
+                                <input type="checkbox" id="cleanupSpawnPoint" value="spawn_point" style="margin-right: 10px;">
+                                <span>📍 所有玩家复活点</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(76, 175, 80, 0.1); border: 1px solid #4caf50; border-radius: 6px; cursor: pointer;">
+                                <input type="checkbox" id="cleanupMonthCard" value="month_card" style="margin-right: 10px;">
+                                <span>👑 所有玩家会员</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button id="executeCleanupBtn" class="btn" style="background: linear-gradient(45deg, #f44336, #e57373); color: #fff;">
+                            🗑️ 执行清理
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 数据迁移模态框模板 -->
+    <template id="dataMigrationModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 550px;">
+                <div class="modal-header">
+                    <h3>🔄 数据迁移</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="migrationTargetUsername">目标账号：</label>
+                        <input type="text" id="migrationTargetUsername" class="form-control" placeholder="输入要转移到的目标账号">
+                    </div>
+                    <div class="form-group">
+                        <label for="migrationTargetPassword">目标账号密码：</label>
+                        <input type="password" id="migrationTargetPassword" class="form-control" placeholder="输入目标账号的密码">
+                    </div>
+                    <div class="form-group">
+                        <button id="verifyMigrationBtn" class="btn btn-primary" style="background: linear-gradient(45deg, #2196f3, #42a5f5); color: #fff;">
+                            🔐 验证账号
+                        </button>
+                    </div>
+                    <div id="migrationStatus" style="display: none; margin-top: 15px;">
+                        <div style="padding: 15px; background: rgba(33, 150, 243, 0.1); border: 1px solid #2196f3; border-radius: 8px; margin-bottom: 15px;">
+                            <div style="color: #64b5f6; font-weight: bold; margin-bottom: 10px;">验证成功</div>
+                            <div style="color: #b0bec5; font-size: 14px;">
+                                当前账号: <span id="currentUsername" style="color: #4caf50;"></span><br>
+                                目标账号: <span id="verifiedTargetUsername" style="color: #ff9800;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #e0e0e0; font-weight: bold; margin-bottom: 10px; display: block;">选择要迁移的数据：</label>
+                            <div style="display: grid; gap: 10px;">
+                                <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #6a1b9a; border-radius: 6px; cursor: pointer;">
+                                    <input type="checkbox" id="migrateAiService" value="ai_service" style="margin-right: 10px;">
+                                    <span>🤖 AI模型数据</span>
+                                </label>
+                                <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #6a1b9a; border-radius: 6px; cursor: pointer;">
+                                    <input type="checkbox" id="migrateAutoTriggerRules" value="auto_trigger_rules" style="margin-right: 10px;">
+                                    <span>⚡ 自动命令规则</span>
+                                </label>
+                                <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #6a1b9a; border-radius: 6px; cursor: pointer;">
+                                    <input type="checkbox" id="migrateCommandsCategories" value="commands_categories" style="margin-right: 10px;">
+                                    <span>📋 命令及分类</span>
+                                </label>
+                                <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #6a1b9a; border-radius: 6px; cursor: pointer;">
+                                    <input type="checkbox" id="migratePlayers" value="players" style="margin-right: 10px;">
+                                    <span>👥 玩家数据</span>
+                                </label>
+                                <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #6a1b9a; border-radius: 6px; cursor: pointer;">
+                                    <input type="checkbox" id="migrateProducts" value="products_categories" style="margin-right: 10px;">
+                                    <span>🏪 商品分类及商品</span>
+                                </label>
+                                <label class="checkbox-label" style="display: flex; align-items: center; padding: 10px; background: rgba(156, 39, 176, 0.1); border: 1px solid #6a1b9a; border-radius: 6px; cursor: pointer;">
+                                    <input type="checkbox" id="migrateChatMessages" value="chat_messages" style="margin-right: 10px;">
+                                    <span>💬 聊天记录</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <button id="executeMigrationBtn" class="btn" style="background: linear-gradient(45deg, #e91e63, #f06292); color: #fff;">
+                                🔄 开始迁移
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- AI设置模态框模板 -->
+    <template id="aiSettingsModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3>🤖 AI客服设置 <span id="aiStatusText" style="font-size: 14px; color: #f44336;">(未开启)</span></h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="aiModelUrl">模型地址：</label>
+                        <input type="text" id="aiModelUrl" class="form-control" placeholder="例如：https://api.deepseek.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="aiApiKey">模型密钥：</label>
+                        <input type="password" id="aiApiKey" class="form-control" placeholder="输入API密钥">
+                    </div>
+                    <div class="form-group">
+                        <label for="aiModelId">模型ID名称：</label>
+                        <div style="display: flex; gap: 10px;">
+                            <select id="aiModelId" class="form-control" style="flex: 1;">
+                                <option value="">-- 请先获取模型列表 --</option>
+                            </select>
+                            <button id="fetchModelsBtn" class="btn btn-secondary" style="white-space: nowrap; padding: 8px 15px;">🔄 获取模型</button>
+                        </div>
+                        <div id="manualModelInput" style="display: none; margin-top: 10px;">
+                            <input type="text" id="aiModelIdManual" class="form-control" placeholder="手动输入模型ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="aiSystemPrompt">系统提示词：</label>
+                        <textarea id="aiSystemPrompt" class="form-control" rows="6" placeholder="输入AI的系统提示词，定义AI的角色和行为..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="aiKeyword">关键词（开头前缀为）：</label>
+                        <input type="text" id="aiKeyword" class="form-control" placeholder="触发AI的关键词，游戏内必须以这个开头来发送消息">
+                    </div>
+                    <div class="form-group">
+                        <div style="display: flex; align-items: center;">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="aiEnabled">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span style="color: #b0bec5; margin-left: 10px;">开启AI客服</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button id="saveAiSettingsBtn" class="btn btn-primary" style="background: linear-gradient(45deg, #00bcd4, #26c6da); color: #fff;">
+                            💾 保存设置
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 聊天记录模态框模板 -->
+    <template id="chatHistoryModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 900px; max-height: 80vh; display: flex; flex-direction: column;">
+                <div class="modal-header">
+                    <h3>💬 聊天记录</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 0;">
+                    <div id="chatMessagesContainer" style="padding: 20px;">
+                        <div style="color: #b0bec5; font-style: italic; text-align: center; padding: 20px;">
+                            加载中...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 发送通知模态框模板 -->
+    <template id="sendNotificationModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3>📢 发送通知</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="notificationPlayerName">玩家名称：</label>
+                        <input type="text" id="notificationPlayerName" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationMessage">通知消息：</label>
+                        <textarea id="notificationMessage" class="form-control" rows="5" placeholder="输入要发送的消息内容..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button id="sendNotificationBtn" class="btn btn-primary" style="background: linear-gradient(45deg, #4caf50, #66bb6a); color: #e8f5e8;">
+                            📤 发送通知
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 奴隶信息模态框模板 -->
+    <template id="playerThrallsModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 1200px; width: 95%; max-height: 90vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 2px solid #e91e63; display: flex; flex-direction: column;">
+                <div class="modal-header" style="background: linear-gradient(90deg, #e91e63 0%, #9c27b0 100%); border-bottom: 2px solid #e91e63; display: flex; flex-direction: column; position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3 style="color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">👤 奴隶信息 - <span id="playerThrallName">玩家名称</span></h3>
+                        <button class="modal-close" style="color: #fff; font-size: 24px;">&times;</button>
+                    </div>
+                    <span style="color: #b0bec5; font-size: 12px; width: 100%; margin-top: 5px;">提示：显示该玩家拥有的所有奴隶及其详细信息。</span>
+                </div>
+                <div class="modal-body" style="padding: 20px; overflow-y: auto; flex: 1;">
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <div style="flex: 1;">
+                            <input type="text" id="thrallSearch" class="form-control" placeholder="搜索奴隶名称或ID..." style="background: rgba(255,255,255,0.1); border: 1px solid #e91e63; color: #fff;">
+                        </div>
+                        <button id="refreshThrallsBtn" class="btn" style="background: linear-gradient(45deg, #e91e63, #f06292); color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap;">刷新</button>
+                    </div>
+                    
+                    <div id="thrallLoadingIndicator" style="display: none; text-align: center; padding: 20px; color: #b0bec5;">
+                        <div>正在加载奴隶数据...</div>
+                    </div>
+                    
+                    <div id="thrallsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 15px;">
+                        <div style="color: #b0bec5; font-style: italic; text-align: center; padding: 20px; grid-column: 1 / -1;">
+                            加载中...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 玩家信息模态框模板 -->
+    <template id="playerInfoModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 1000px; width: 95%; max-height: 90vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 2px solid #00bcd4; display: flex; flex-direction: column;">
+                <div class="modal-header" style="background: linear-gradient(90deg, #00bcd4 0%, #26c6da 100%); border-bottom: 2px solid #00bcd4;">
+                    <h3 style="color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">📋 玩家信息 - <span id="playerInfoName">玩家名称</span></h3>
+                    <button class="modal-close" style="color: #fff; font-size: 24px;">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 20px; overflow-y: auto; flex: 1;">
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button id="refreshPlayerInfoBtn" class="btn" style="background: linear-gradient(45deg, #00bcd4, #4dd0e1); color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">刷新</button>
+                    </div>
+                    
+                    <div id="playerInfoLoadingIndicator" style="display: none; text-align: center; padding: 20px; color: #b0bec5;">
+                        <div>正在加载玩家数据...</div>
+                    </div>
+                    
+                    <div id="playerInfoContent" style="color: #b0bec5;">
+                        加载中...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 奴隶详情模态框模板 -->
+    <template id="thrallDetailModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 1000px; width: 95%; max-height: 90vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 2px solid #e91e63; display: flex; flex-direction: column;">
+                <div class="modal-header" style="background: linear-gradient(90deg, #e91e63 0%, #9c27b0 100%); border-bottom: 2px solid #e91e63;">
+                    <h3 style="color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">👤 奴隶详情 - <span id="thrallDetailName">奴隶名称</span></h3>
+                    <button class="modal-close" style="color: #fff; font-size: 24px;">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 20px; overflow-y: auto; flex: 1;">
+                    <div id="thrallDetailContent" style="color: #b0bec5;">
+                        加载中...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- QQ机器人设置模态框模板 -->
+    <template id="qqBotSettingsModalTemplate">
+        <div class="modal">
+            <div class="modal-content" style="max-width: 800px; max-height: 85vh; display: flex; flex-direction: column;">
+                <div class="modal-header">
+                    <h3>🤖 QQ机器人设置--请联系群主协助绑定QQ群。</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 20px;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <button class="qq-bot-tab-btn active" data-tab="bind" style="flex: 1; padding: 12px 20px; background: linear-gradient(45deg, #12b7f5, #4fc3f7); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold;">
+                            🔗 绑定设置
+                        </button>
+                        <button class="qq-bot-tab-btn" data-tab="checkin" style="flex: 1; padding: 12px 20px; background: rgba(255,255,255,0.1); color: #b0bec5; border: 1px solid #333; border-radius: 8px; cursor: pointer; font-size: 14px;">
+                            📅 签到设置
+                        </button>
+                        <button class="qq-bot-tab-btn" data-tab="balance" style="flex: 1; padding: 12px 20px; background: rgba(255,255,255,0.1); color: #b0bec5; border: 1px solid #333; border-radius: 8px; cursor: pointer; font-size: 14px;">
+                            💰 余额查询设置
+                        </button>
+                        <button class="qq-bot-tab-btn" data-tab="online" style="flex: 1; padding: 12px 20px; background: rgba(255,255,255,0.1); color: #b0bec5; border: 1px solid #333; border-radius: 8px; cursor: pointer; font-size: 14px;">
+                            👥 在线玩家设置
+                        </button>
+                    </div>
+
+                    <!-- 绑定设置面板 -->
+                    <div id="qqBotBindPanel" class="qq-bot-panel">
+                        <div class="form-group">
+                            <label for="qqBotBindSuccessMsg">绑定成功提示消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotBindSuccessMsg" class="form-control" rows="3" placeholder="绑定成功后发送的提示消息" style="flex: 1;">绑定成功！您的QQ已与游戏角色 @角色名 绑定。</textarea>
+                                <button id="insertBindSuccessVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="bindSuccessVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotBindSuccessMsg" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qqBotBindFailMsg">绑定失败提示消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotBindFailMsg" class="form-control" rows="3" placeholder="绑定失败时发送的提示消息" style="flex: 1;">绑定失败，请检查您的游戏角色名称是否正确。</textarea>
+                                <button id="insertBindFailVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="bindFailVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotBindFailMsg" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qqBotBindAlreadyMsg">QQ已绑定其他角色提示消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotBindAlreadyMsg" class="form-control" rows="3" placeholder="当QQ已绑定其他角色时发送的提示消息" style="flex: 1;">您的QQ已绑定角色 @角色名，请先解绑后再绑定新角色。</textarea>
+                                <button id="insertBindAlreadyVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="bindAlreadyVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotBindAlreadyMsg" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button id="saveQqBotBindBtn" class="btn" style="background: linear-gradient(45deg, #12b7f5, #4fc3f7); color: #fff;">
+                                💾 保存绑定设置
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 签到设置面板 -->
+                    <div id="qqBotCheckinPanel" class="qq-bot-panel" style="display: none;">
+                        <div class="form-group">
+                            <label>签到时间设置：</label>
+                            <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 15px; margin-bottom: 15px;">
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="radio" name="signResetType" value="daily" id="signResetTypeDaily" checked>
+                                        <span>按指定时间刷新签到（每天固定时间重置）</span>
+                                    </label>
+                                    <div id="dailyResetSettings" style="margin-left: 30px; margin-top: 10px;">
+                                        <label for="signResetHour">重置时间（小时，0-23）：</label>
+                                        <input type="number" id="signResetHour" class="form-control" min="0" max="23" value="0" style="width: 80px; display: inline-block;">
+                                        <span style="color: #b0bec5; margin-left: 10px;">例如：0 表示每天 0:00 重置，8 表示每天 8:00 重置</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="radio" name="signResetType" value="interval" id="signResetTypeInterval">
+                                        <span>每隔指定时间刷新签到（距离上次签到后计时）</span>
+                                    </label>
+                                    <div id="intervalResetSettings" style="margin-left: 30px; margin-top: 10px; display: none;">
+                                        <label for="signIntervalHours">间隔时间（小时）：</label>
+                                        <input type="number" id="signIntervalHours" class="form-control" min="1" max="720" value="24" style="width: 80px; display: inline-block;">
+                                        <span style="color: #b0bec5; margin-left: 10px;">例如：24 表示每24小时可签到一次</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>签到奖励金额设置：</label>
+                            <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 15px; margin-bottom: 15px;">
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="radio" name="signGoldType" value="fixed" id="signGoldTypeFixed" checked>
+                                        <span>固定金额</span>
+                                    </label>
+                                    <div id="fixedGoldSettings" style="margin-left: 30px; margin-top: 10px;">
+                                        <label for="signGoldFixed">签到奖励金额：</label>
+                                        <input type="number" id="signGoldFixed" class="form-control" min="1" value="100" style="width: 100px; display: inline-block;">
+                                        <span style="color: #b0bec5; margin-left: 10px;">金币</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="radio" name="signGoldType" value="random" id="signGoldTypeRandom">
+                                        <span>随机金额</span>
+                                    </label>
+                                    <div id="randomGoldSettings" style="margin-left: 30px; margin-top: 10px; display: none;">
+                                        <div>
+                                            <label for="signGoldMin">最小金额：</label>
+                                            <input type="number" id="signGoldMin" class="form-control" min="1" value="1" style="width: 80px; display: inline-block;">
+                                            <span style="color: #b0bec5; margin: 0 10px;">~</span>
+                                            <label for="signGoldMax">最大金额：</label>
+                                            <input type="number" id="signGoldMax" class="form-control" min="1" value="50" style="width: 80px; display: inline-block;">
+                                            <span style="color: #b0bec5; margin-left: 10px;">金币</span>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <label for="signGoldWeight">难度系数：</label>
+                                            <input type="number" id="signGoldWeight" class="form-control" min="0.1" max="10" step="0.1" value="1.0" style="width: 80px; display: inline-block;">
+                                            <span style="color: #b0bec5; margin-left: 10px;">数值越大，越难抽中高金额（0.1-10）</span>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <button id="testRandomGoldBtn" class="btn btn-secondary" type="button" style="padding: 6px 12px; background: #673ab7; border: 1px solid #512da8; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">🎲 测试随机金额</button>
+                                            <span id="testRandomGoldResult" style="margin-left: 10px; color: #4caf50; font-weight: bold;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qqBotCheckinSuccessMsg">签到成功提示消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotCheckinSuccessMsg" class="form-control" rows="3" placeholder="签到成功后发送的提示消息" style="flex: 1;">签到成功！您已连续签到 @连续天数 天，获得 @金额 金币。</textarea>
+                                <button id="insertCheckinSuccessVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="checkinSuccessVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotCheckinSuccessMsg" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                    <button class="qq-bot-variable-btn" data-target="qqBotCheckinSuccessMsg" data-variable="@连续天数" style="padding: 6px 12px; background: #4caf50; border: 1px solid #388e3c; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@连续天数</button>
+                                    <button class="qq-bot-variable-btn" data-target="qqBotCheckinSuccessMsg" data-variable="@金额" style="padding: 6px 12px; background: #ffc107; border: 1px solid #ffa000; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@金额</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qqBotCheckinAlreadyMsg">已签到提示消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotCheckinAlreadyMsg" class="form-control" rows="3" placeholder="重复签到时发送的提示消息" style="flex: 1;">您今天已经签到过了，明天再来吧！</textarea>
+                                <button id="insertCheckinAlreadyVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="checkinAlreadyVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotCheckinAlreadyMsg" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qqBotCheckinNotBoundMsg">未绑定提示消息：</label>
+                            <textarea id="qqBotCheckinNotBoundMsg" class="form-control" rows="3" placeholder="未绑定时发送的提示消息">您还未绑定游戏角色，请先使用"绑定 角色名"进行绑定。</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button id="saveQqBotCheckinBtn" class="btn" style="background: linear-gradient(45deg, #4caf50, #66bb6a); color: #fff;">
+                                💾 保存签到设置
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 余额查询设置面板 -->
+                    <div id="qqBotBalancePanel" class="qq-bot-panel" style="display: none;">
+                        <div class="form-group">
+                            <label for="qqBotBalanceSuccessMsg">查询成功提示消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotBalanceSuccessMsg" class="form-control" rows="3" placeholder="查询成功后发送的提示消息" style="flex: 1;">您的当前余额为：@金额 金币</textarea>
+                                <button id="insertBalanceSuccessVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="balanceSuccessVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotBalanceSuccessMsg" data-variable="@角色名" style="padding: 6px 12px; background: #ff5722; border: 1px solid #e64a19; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@角色名</button>
+                                    <button class="qq-bot-variable-btn" data-target="qqBotBalanceSuccessMsg" data-variable="@金额" style="padding: 6px 12px; background: #ffc107; border: 1px solid #ffa000; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@金额</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qqBotBalanceNotBoundMsg">未绑定提示消息：</label>
+                            <textarea id="qqBotBalanceNotBoundMsg" class="form-control" rows="3" placeholder="未绑定时发送的提示消息">您还未绑定游戏角色，请先使用"绑定 角色名"进行绑定。</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button id="saveQqBotBalanceBtn" class="btn" style="background: linear-gradient(45deg, #ff9800, #ffb74d); color: #fff;">
+                                💾 保存余额查询设置
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 在线玩家设置面板 -->
+                    <div id="qqBotOnlinePanel" class="qq-bot-panel" style="display: none;">
+                        <div class="form-group">
+                            <label for="qqBotOnlineHeaderMsg">列表头部消息：</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea id="qqBotOnlineHeaderMsg" class="form-control" rows="2" placeholder="在线玩家列表头部消息" style="flex: 1;">📊 当前在线玩家 (@在线人数 人)：</textarea>
+                                <button id="insertOnlineVarBtn" class="btn btn-secondary" title="插入变量" style="padding: 8px 12px; white-space: nowrap;">📌 变量</button>
+                            </div>
+                            <div id="onlineVarList" style="display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 10px; margin-top: 5px;">
+                                <div style="margin-bottom: 8px; font-weight: bold; color: #b0bec5;">可用的变量，点击插入：</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="qq-bot-variable-btn" data-target="qqBotOnlineHeaderMsg" data-variable="@在线人数" style="padding: 6px 12px; background: #9c27b0; border: 1px solid #7b1fa2; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@在线人数</button>
+                                    <button class="qq-bot-variable-btn" data-target="qqBotOnlineHeaderMsg" data-variable="@玩家列表" style="padding: 6px 12px; background: #2196f3; border: 1px solid #1976d2; border-radius: 4px; cursor: pointer; font-size: 13px; color: #fff;">@玩家列表</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button id="saveQqBotOnlineBtn" class="btn" style="background: linear-gradient(45deg, #9c27b0, #ab47bc); color: #fff;">
+                                💾 保存在线玩家设置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+</html>

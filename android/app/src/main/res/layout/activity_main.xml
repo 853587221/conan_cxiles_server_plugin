@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_dark"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_header"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🖥️ 流放者柯南管理器"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="流放者柯南纯净服专用"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:id="@+id/layout_connection_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="连接设置"
+                    android:textColor="@color/accent"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_connection_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="▼"
+                    android:textColor="@color/accent"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_connection_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/server_address"
+                    android:inputType="text"
+                    android:text="127.0.0.1"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:backgroundTint="@color/accent" />
+
+                <EditText
+                    android:id="@+id/edit_rcon_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/rcon_password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:backgroundTint="@color/accent" />
+
+                <EditText
+                    android:id="@+id/edit_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/rcon_port"
+                    android:inputType="number"
+                    android:text="25575"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:backgroundTint="@color/accent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/save_info"
+                        android:textColor="@color/text_secondary"
+                        android:checked="true"
+                        android:visibility="gone"
+                        android:buttonTint="@color/accent" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_rcon_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_public_mode"
+                        android:textColor="@color/text_secondary" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_connect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/connect"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/success" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_auto_command"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:text="⚡ 自动命令"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/accent" />
+
+                <Button
+                    android:id="@+id/btn_player_manage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="👥 玩家管理"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/accent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_shop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:text="🏪 商城"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/accent" />
+
+                <Button
+                    android:id="@+id/btn_more"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="📋 更多"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="48dp"
+                    android:backgroundTint="@color/accent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💻 服务器控制台"
+                    android:textColor="@color/accent"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_list_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="👥 玩家列表"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="32dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:backgroundTint="@color/accent" />
+
+                <Button
+                    android:id="@+id/btn_fullscreen_console"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔄 横屏"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="32dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:backgroundTint="@color/accent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/console_bg"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ScrollView
+                    android:id="@+id/scroll_console"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
+
+                    <TextView
+                        android:id="@+id/text_console"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/console_text"
+                        android:textSize="12sp"
+                        android:text="=== RCON客户端已就绪 ===\n请输入服务器连接信息并点击连接..." />
+
+                </ScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:id="@+id/edit_command"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/command_input_hint"
+                        android:inputType="text"
+                        android:enabled="false"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_hint"
+                        android:backgroundTint="@color/accent" />
+
+                    <Button
+                        android:id="@+id/btn_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="📤"
+                        android:enabled="false"
+                        android:minWidth="60dp"
+                        android:backgroundTint="@color/accent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="⚡ 快捷命令"
+                android:textColor="@color/accent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_edit_categories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:text="📂 编辑分类"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="40dp"
+                    android:backgroundTint="@color/accent" />
+
+                <Button
+                    android:id="@+id/btn_edit_commands"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="✏️ 编辑命令"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:minHeight="40dp"
+                    android:backgroundTint="@color/accent" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/accent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_commands"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="true" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <View
+            android:id="@+id/view_status_dot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/status_dot_disconnected" />
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/disconnected"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🚪 退出"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:minHeight="36dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:backgroundTint="@color/error" />
+
+    </LinearLayout>
+
+</LinearLayout>

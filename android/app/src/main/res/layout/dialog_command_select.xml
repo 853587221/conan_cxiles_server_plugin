@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_dark"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择命令"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="16dp" />
+
+    <EditText
+        android:id="@+id/edit_search_command"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edittext"
+        android:hint="搜索命令名称或描述..."
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="12dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
+        android:textSize="14sp"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawablePadding="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_commands"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:id="@+id/text_no_commands"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="未找到匹配的命令"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="取消"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/text_secondary" />
+
+</LinearLayout>

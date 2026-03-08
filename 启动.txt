@@ -1,0 +1,8 @@
+📝 常用命令:
+   查看状态: systemctl status rcon-client.service
+   启动服务: systemctl start rcon-client.service
+   停止服务: systemctl stop rcon-client.service
+   重启服务: systemctl restart rcon-client.service
+   查看日志: journalctl -u rcon-client.service -f
+
+   启动和关闭都需要点时间，耐心等待

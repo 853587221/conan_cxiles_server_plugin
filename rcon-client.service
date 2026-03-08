@@ -1,0 +1,17 @@
+[Unit]
+Description=RCON Client Service
+After=network.target
+
+[Service]
+Type=forking
+User=root
+WorkingDirectory=/www/wwwroot/LFZKN/RconClient
+ExecStart=/www/wwwroot/LFZKN/RconClient/start.sh
+ExecStop=/www/wwwroot/LFZKN/RconClient/stop.sh
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

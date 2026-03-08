@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="玩家名称"
+            android:textColor="@color/accent"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_online_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="离线"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/text_vip_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text=""
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="数据编辑"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="权限标签:"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edit_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:textColor="@color/text_primary"
+                android:backgroundTint="@color/accent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="金额:"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edit_gold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_primary"
+                android:backgroundTint="@color/accent" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="快捷操作"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_send_notification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="📢 通知"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/warning" />
+
+            <Button
+                android:id="@+id/btn_vip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="👑 会员"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/accent_dark" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_player_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="📋 信息"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/info" />
+
+            <Button
+                android:id="@+id/btn_inventory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="🎒 物品"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/accent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_thralls"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="👤 奴隶"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/error" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="💾 保存"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/success" />
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="🗑️ 删除"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/error" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

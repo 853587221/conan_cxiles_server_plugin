@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_dark"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💻 服务器控制台"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_list_players_fullscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="👥 玩家列表"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:minHeight="36dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:backgroundTint="@color/accent" />
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✕ 关闭"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:minHeight="36dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:backgroundTint="@color/error" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_console_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/console_bg"
+        android:padding="12dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false">
+
+        <TextView
+            android:id="@+id/text_console_fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/console_text"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/edit_command_fullscreen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/command_input_hint"
+            android:inputType="text"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:backgroundTint="@color/accent"
+            android:minHeight="48dp" />
+
+        <Button
+            android:id="@+id/btn_send_fullscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="📤 发送"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:minWidth="80dp"
+            android:minHeight="48dp"
+            android:backgroundTint="@color/accent" />
+
+    </LinearLayout>
+
+</LinearLayout>

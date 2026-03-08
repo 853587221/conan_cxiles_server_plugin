@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conan Exiles 管理员后台</title>
+    <link rel="stylesheet" href="/static/admin.css">
+</head>
+<body>
+    <div id="login-page" class="page">
+        <div class="login-container">
+            <h1>管理员登录</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">登录</button>
+            </form>
+            <div id="login-message" class="message"></div>
+        </div>
+    </div>
+
+    <div id="admin-page" class="page hidden">
+        <div class="header">
+            <h1>Conan Exiles 管理员后台</h1>
+            <div class="header-actions">
+                <span id="admin-username" class="admin-username"></span>
+                <button id="logout-btn" class="btn btn-secondary">退出登录</button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="users">用户管理</button>
+            <button class="tab-btn" data-tab="invite-codes">邀请码管理</button>
+        </div>
+
+        <div id="users-tab" class="tab-content active">
+            <div class="actions-bar">
+                <button id="add-user-btn" class="btn btn-primary">添加用户</button>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>RCON IP</th>
+                            <th>RCON 端口</th>
+                            <th>管理员</th>
+                            <th>邀请码</th>
+                            <th>注册时间</th>
+                            <th>最后登录</th>
+                            <th>有效期</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="invite-codes-tab" class="tab-content">
+            <div class="actions-bar">
+                <button id="add-invite-code-btn" class="btn btn-primary">添加邀请码</button>
+                <button id="generate-invite-code-btn" class="btn btn-secondary">生成随机邀请码</button>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>邀请码</th>
+                            <th>创建者</th>
+                            <th>最大使用次数</th>
+                            <th>已使用次数</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>过期时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invite-codes-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="user-modal-title">添加用户</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="user-username">用户名</label>
+                    <input type="text" id="user-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-password">密码（编辑时留空则不修改）</label>
+                    <input type="password" id="user-password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="user-rcon-ip">RCON IP</label>
+                    <input type="text" id="user-rcon-ip" name="rcon_ip" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-rcon-password">RCON 密码</label>
+                    <input type="password" id="user-rcon-password" name="rcon_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-rcon-port">RCON 端口</label>
+                    <input type="number" id="user-rcon-port" name="rcon_port" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-invite-code">邀请码（可选）</label>
+                    <input type="text" id="user-invite-code" name="invite_code">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="user-is-admin" name="is_admin">
+                        设为管理员
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="user-valid-until">有效期（留空为无限期）</label>
+                    <input type="datetime-local" id="user-valid-until" name="valid_until">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="invite-code-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="invite-code-modal-title">添加邀请码</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="invite-code-form">
+                <div class="form-group">
+                    <label for="invite-code-code">邀请码</label>
+                    <input type="text" id="invite-code-code" name="code" required>
+                </div>
+                <div class="form-group">
+                    <label for="invite-code-max-uses">最大使用次数</label>
+                    <input type="number" id="invite-code-max-uses" name="max_uses" value="1" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="invite-code-expire-days">有效期（天）</label>
+                    <input type="number" id="invite-code-expire-days" name="expire_days" min="1">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <h2>提示</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="message-content" class="message-content"></div>
+            <div class="form-actions">
+                <button class="btn btn-primary close-modal-btn">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/admin.js"></script>
+</body>
+</html>

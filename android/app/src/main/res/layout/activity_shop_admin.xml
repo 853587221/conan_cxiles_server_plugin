@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_dark"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="@color/white"
+            android:contentDescription="返回" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="⚙️ 商城管理"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_tab_categories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="📁 商品分类"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/accent" />
+
+        <Button
+            android:id="@+id/btn_tab_products"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="📦 商品管理"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/text_secondary" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:id="@+id/container_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="添加分类"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edit_category_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="分类名称"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_select_icon"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="📁 选择图标"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/primary" />
+
+                    <EditText
+                        android:id="@+id/edit_category_sort"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_edittext"
+                        android:hint="排序序号"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_add_category"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="添加分类"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/success" />
+
+                    <Button
+                        android:id="@+id/btn_cancel_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="取消编辑"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/text_secondary"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="分类列表"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="添加/编辑商品"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinner_product_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:padding="12dp" />
+
+                <EditText
+                    android:id="@+id/edit_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="商品名称"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edit_product_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:gravity="top|start"
+                    android:hint="商品描述"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:minLines="2"
+                    android:padding="12dp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="商品图片"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <Button
+                        android:id="@+id/btn_upload_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📷 上传图片"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/info" />
+
+                    <Button
+                        android:id="@+id/btn_clear_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="清除"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/text_secondary"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/text_image_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:ellipsize="middle"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/image_product_preview"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_card"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edit_product_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edittext"
+                        android:hint="价格"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/edit_product_sort"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_edittext"
+                        android:hint="排序序号"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_save_product"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="保存商品"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/success" />
+
+                    <Button
+                        android:id="@+id/btn_cancel_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="取消编辑"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/text_secondary"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="商品列表"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

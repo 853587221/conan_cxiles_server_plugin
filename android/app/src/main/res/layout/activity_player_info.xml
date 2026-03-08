@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="12dp">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="@color/text_secondary"
+                android:contentDescription="返回" />
+
+            <TextView
+                android:id="@+id/text_player_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/accent"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progress_loading"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/btn_refresh"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_rotate"
+                android:tint="@color/accent"
+                android:contentDescription="刷新" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👥 部落信息"
+            android:textColor="@color/info"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="部落ID:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_guild_id" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="部落名:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_guild_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎒 背包概览"
+            android:textColor="@color/info"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_inventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/text_inventory_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无物品"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_thralls_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👤 奴隶列表"
+            android:textColor="@color/info"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_thralls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/text_thralls_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无奴隶"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📊 属性信息"
+            android:textColor="@color/info"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="力量:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_strength" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/error" android:textSize="12sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_strength" android:layout_width="50dp" android:layout_height="26dp" android:text="修改" android:textSize="10sp" android:textAllCaps="false" android:padding="0dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="@color/error_transparent" android:textColor="@color/error" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="灵活:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_agility" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/success" android:textSize="12sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_agility" android:layout_width="50dp" android:layout_height="26dp" android:text="修改" android:textSize="10sp" android:textAllCaps="false" android:padding="0dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="@color/success_transparent" android:textColor="@color/success" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="活力:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_vitality" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/info" android:textSize="12sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_vitality" android:layout_width="50dp" android:layout_height="26dp" android:text="修改" android:textSize="10sp" android:textAllCaps="false" android:padding="0dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="@color/info_transparent" android:textColor="@color/info" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="毅力:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_grit" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/purple" android:textSize="12sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_grit" android:layout_width="50dp" android:layout_height="26dp" android:text="修改" android:textSize="10sp" android:textAllCaps="false" android:padding="0dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="@color/purple_transparent" android:textColor="@color/purple" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="权威:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_authority" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/warning" android:textSize="12sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_authority" android:layout_width="50dp" android:layout_height="26dp" android:text="修改" android:textSize="10sp" android:textAllCaps="false" android:padding="0dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="@color/warning_transparent" android:textColor="@color/warning" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="专长:" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                <TextView android:id="@+id/text_expertise" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/accent" android:textSize="12sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_expertise" android:layout_width="50dp" android:layout_height="26dp" android:text="修改" android:textSize="10sp" android:textAllCaps="false" android:padding="0dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="@color/accent_transparent" android:textColor="@color/accent" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="未分配属性点:"
+                    android:textColor="@color/yellow"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/text_attribute_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/yellow"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_add_attribute_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:text="增加"
+                    android:textColor="@color/yellow"
+                    android:textSize="12sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:backgroundTint="@color/yellow_transparent" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="提示：添加属性点后游戏内秒到账"
+                android:textColor="@color/warning"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
